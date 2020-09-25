@@ -10,12 +10,14 @@
  */
 package common.core;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import common.pojo.GroupBy;
 import common.pojo.Limit;
 import common.pojo.OrderBy;
 import common.pojo.Where;
+import common.utils.ObjectUtils;
 
 /**
  * @ClassName: MyCoreService
@@ -27,9 +29,21 @@ import common.pojo.Where;
  */
 public class MyCoreService {
 	
+	public static MyCoreService getInstance() {
+		return new MyCoreService();
+	}
+	
 	public List<?> query(List<?> data,Where where,OrderBy orderBy,GroupBy groupBy,Limit limit){
-		
-		return null;
+		List<Object> result=new ArrayList<Object>();
+		if(ObjectUtils.isNotEmpty(data)) {
+			for(Object obj:data) {
+				boolean b= WhereUtil.getInstance().queryWhere(data, where);
+				if(b) {
+					result.add(obj);
+				}
+			}
+		}
+		return result;
 	}
 
 }

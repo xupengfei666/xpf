@@ -7,13 +7,10 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
-import tk.mybatis.spring.annotation.MapperScan;
-
 @SpringBootApplication
 @EnableScheduling//开启定时任务
 
-@ComponentScan({"com.mall","common.server","common.mybatis","common.aspect","common.configuration"})
-@MapperScan({"common.mbg.mapper"})
+@ComponentScan({"com.mayidb"})
 @EnableCaching
 @EnableAsync
 public class MallAppApplication {

@@ -304,12 +304,21 @@ public class ReflectUtils {
 			e1.printStackTrace();
 		}
 	}
+	
+	public static String getValueStringByFieldName(Object obj, String fieldName) {
+		Object result=getValueByFieldName(obj, fieldName);
+		return ObjectUtils.objectToString(result);
+		
+	}
 	/**
-	 * 获取obj对象fieldName的属性值
-	 * 
-	 * @param obj
-	 * @param fieldName
-	 * @return
+	 * @Title: getValueByFieldName
+	 * @Description: 类的反射获取值Object
+	 * @author: 许鹏飞
+	 * @param: @param obj
+	 * @param: @param fieldName
+	 * @param: @return 参数说明
+	 * @return: Object 返回类型
+	 * @throws
 	 */
 	public static Object getValueByFieldName(Object obj, String fieldName) {
 		Field field = getFieldByFieldName(obj, fieldName);
@@ -331,12 +340,16 @@ public class ReflectUtils {
 		}
 		return value;
 	}
+	
 	/**
-	 * 获取obj对象fieldName的Field
-	 * 
-	 * @param obj
-	 * @param fieldName
-	 * @return
+	 * @Title: getFieldByFieldName
+	 * @Description: 获取类的反射实体Field
+	 * @author: 许鹏飞
+	 * @param: @param obj
+	 * @param: @param fieldName
+	 * @param: @return 参数说明
+	 * @return: Field 返回类型
+	 * @throws
 	 */
 	public static Field getFieldByFieldName(Object obj, String fieldName) {
 		for (Class<?> superClass = obj.getClass(); superClass != Object.class; superClass = superClass

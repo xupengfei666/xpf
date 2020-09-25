@@ -46,7 +46,7 @@ public class Where {
 	/**
 	 * @Fields value : 要查询数据匹配的值
 	 */
-	private String value;
+	private Object value;
 
 	public String getCondition() {
 		if (ObjectUtils.isNotEmpty(condition)) {
@@ -81,11 +81,11 @@ public class Where {
 		this.property = property;
 	}
 
-	public String getValue() {
+	public Object getValue() {
 		return value;
 	}
 
-	public void setValue(String value) {
+	public void setValue(Object value) {
 		this.value = value;
 	}
 
@@ -97,7 +97,7 @@ public class Where {
 	 * @param: @param property
 	 * @param: @param value
 	 */
-	public Where(String condition, String connector, String property, String value) {
+	public Where(String condition, String connector, String property, Object value) {
 		super();
 		this.condition = condition;
 		this.connector = connector;
@@ -105,14 +105,14 @@ public class Where {
 		this.value = value;
 	}
 
-	public Where(String connector, String property, String value) {
+	public Where(String connector, String property, Object value) {
 		super();
 		this.connector = connector;
 		this.property = property;
 		this.value = value;
 	}
 
-	public Where(String property, String value) {
+	public Where(String property, Object value) {
 		super();
 		this.property = property;
 		this.value = value;

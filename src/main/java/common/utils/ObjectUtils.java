@@ -27,7 +27,13 @@ public class ObjectUtils {
         return UUID.randomUUID().toString().replace("-", "").toUpperCase();
     }
 
-  
+  public static String objectToString(Object result) {
+	  if(ObjectUtils.isNotEmpty(result)) {
+			return result.toString();
+		}else {
+			return "";
+		}
+  }
     /**
      * @Title: isEmpty
      * @Description: 判断Object对象为空

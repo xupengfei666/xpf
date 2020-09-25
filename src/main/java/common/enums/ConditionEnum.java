@@ -6,12 +6,11 @@ package common.enums;
  * @author: 许鹏飞
  * @Company: 个人作品
  * @date: 2020-9-25 14:54:43
- * @param: 
+ * @param:
  */
 public enum ConditionEnum {
-	EQ("@EQ"), LIKE("@LIKE"), LIKEBEFORE("@LIKEBEFORE"), LIKEAFTER("@LIKEAFTER"), EXISTS("@EXISTS"),
-	NOTEXISTS("@NOTEXISTS"), GE("@GE"), LEEQ("@LEEQ"), GEEQ("@GEEQ"),
-	LE("@LE"), IN("@IN"), NE("@NE"), NOTIN("@NOTIN"), ISNULL("@ISNULL"), ISNOTNULL("@ISNOTNULL");
+	EQ("@EQ"), LIKE("@LIKE"), EXISTS("@EXISTS"), NOTEXISTS("@NOTEXISTS"), GE("@GE"), LEEQ("@LEEQ"), GEEQ("@GEEQ"),
+	LE("@LE"), NE("@NE"), ISNULL("@ISNULL"), ISNOTNULL("@ISNOTNULL");
 
 	private String name;
 
