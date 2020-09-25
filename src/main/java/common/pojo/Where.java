@@ -105,9 +105,10 @@ public class Where {
 		this.value = value;
 	}
 
-	public Where(String connector, String property, Object value) {
+
+	public Where(String condition, String property, Object value) {
 		super();
-		this.connector = connector;
+		this.condition = condition;
 		this.property = property;
 		this.value = value;
 	}

@@ -15,7 +15,6 @@ import java.util.Arrays;
 import org.apache.commons.lang3.StringUtils;
 
 import common.enums.ConditionEnum;
-import common.enums.ConnectorEnum;
 import common.pojo.Where;
 import common.utils.ObjectUtils;
 import common.utils.ReflectUtils;
@@ -34,6 +33,10 @@ public class WhereUtil {
 	}
 
 	/**
+	 * @throws IllegalAccessException 
+	 * @throws IllegalArgumentException 
+	 * @throws SecurityException 
+	 * @throws NoSuchFieldException 
 	 * @Title: queryWhere
 	 * @Description: 条件查询的核心方法：
 	    *  当为true的时候，该数据在查询范围内                           
@@ -45,7 +48,7 @@ public class WhereUtil {
 	 * @return: int 返回类型
 	 * @throws
 	 */
-	public boolean queryWhere(Object data, Where where) {
+	public boolean queryWhere(Object data, Where where) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
 		if (ObjectUtils.isNotEmpty(where)) {
 			String property = where.getProperty();
 			Object value = where.getValue();
@@ -58,6 +61,10 @@ public class WhereUtil {
 
 	
 	/**
+	 * @throws IllegalAccessException 
+	 * @throws IllegalArgumentException 
+	 * @throws SecurityException 
+	 * @throws NoSuchFieldException 
 	 * @Title: isFitData
 	 * @Description: 条件对比的核心处理方法
 	 * @author: 许鹏飞
@@ -69,7 +76,7 @@ public class WhereUtil {
 	 * @return: boolean 返回类型
 	 * @throws
 	 */
-	private boolean isFitData(Object data, String condition, String property, String value) {
+	private boolean isFitData(Object data, String condition, String property, String value) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
 		String dataValue = ReflectUtils.getValueStringByFieldName(data, property);
 		if (ConditionEnum.EQ.toString().equals(condition)) {
 			if (StringUtils.equals(dataValue, value)) {

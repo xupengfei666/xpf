@@ -15,28 +15,21 @@ import org.apache.commons.lang3.StringUtils;
 import common.constants.Global;
 import net.sf.json.JSONObject;
 
-
 /**
  * @ClassName: ReflectUtils
  * @Description: 反射工具类
  * @author: 许鹏飞
  * @Company: 个人作品
  * @date: 2020-9-25 15:34:30
- * @param: 
+ * @param:
  */
 public class ReflectUtils {
 	private static final String JAVA_LANG = Global.JAVA_LANG;
 
-	
 	/**
-	 * @Title: objectToMap
-	 * @Description: 对象转化为TreeMap
-	 * @author: 许鹏飞
-	 * @param: @param obj
-	 * @param: @return
-	 * @param: @throws IllegalAccessException 参数说明
-	 * @return: TreeMap<String,Object> 返回类型
-	 * @throws
+	 * @Title: objectToMap @Description: 对象转化为TreeMap @author: 许鹏飞 @param: @param
+	 *         obj @param: @return @param: @throws IllegalAccessException
+	 *         参数说明 @return: TreeMap<String,Object> 返回类型 @throws
 	 */
 	public static TreeMap<String, Object> objectToMap(Object obj) throws IllegalAccessException {
 		TreeMap<String, Object> map = new TreeMap<>();
@@ -51,16 +44,10 @@ public class ReflectUtils {
 		return map;
 	}
 
-	
 	/**
-	 * @Title: objectToMapNotNull
-	 * @Description: 对象转化为Map
-	 * @author: 许鹏飞
-	 * @param: @param obj
-	 * @param: @return
-	 * @param: @throws IllegalAccessException 参数说明
-	 * @return: Map<String,String> 返回类型
-	 * @throws
+	 * @Title: objectToMapNotNull @Description: 对象转化为Map @author: 许鹏飞 @param: @param
+	 *         obj @param: @return @param: @throws IllegalAccessException
+	 *         参数说明 @return: Map<String,String> 返回类型 @throws
 	 */
 	public static Map<String, String> objectToMapNotNull(Object obj) throws IllegalAccessException {
 		Map<String, String> map = new HashMap<String, String>();
@@ -78,14 +65,9 @@ public class ReflectUtils {
 	}
 
 	/**
-	 * @Title: objectToMapNotNull
-	 * @Description: 对象转化为JSONObject
-	 * @author: 许鹏飞
-	 * @param: @param obj
-	 * @param: @return
-	 * @param: @throws IllegalAccessException 参数说明
-	 * @return: Map<String,String> 返回类型
-	 * @throws
+	 * @Title: objectToMapNotNull @Description: 对象转化为JSONObject @author:
+	 *         许鹏飞 @param: @param obj @param: @return @param: @throws
+	 *         IllegalAccessException 参数说明 @return: Map<String,String> 返回类型 @throws
 	 */
 	public static JSONObject objectToJson(Object obj) throws IllegalAccessException {
 		JSONObject map = new JSONObject();
@@ -99,9 +81,6 @@ public class ReflectUtils {
 		return map;
 	}
 
-
-
-	
 	/**
 	 * @discription: 反射获取set方法
 	 * @author: 许鹏飞
@@ -250,8 +229,6 @@ public class ReflectUtils {
 		return exceForMethod(cls, functionName, params, values);
 	}
 
-
-
 	public static Object exceForMethod(Class<?> cls, String functionName, Class<?>[] params, Object[] values)
 			throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException,
 			InvocationTargetException, ClassNotFoundException, InstantiationException {
@@ -272,9 +249,6 @@ public class ReflectUtils {
 		return result;
 	}
 
-
-	
-
 	/**
 	 * 设置obj对象fieldName的属性值
 	 * 
@@ -282,18 +256,17 @@ public class ReflectUtils {
 	 * @param fieldName
 	 * @param value
 	 */
-	public static void setValueByFieldName(Object obj, String fieldName,
-			Object value) {
+	public static void setValueByFieldName(Object obj, String fieldName, Object value) {
 		Field field;
 		try {
 			field = obj.getClass().getDeclaredField(fieldName);
-			 if (field.isAccessible()) {  
-		            field.set(obj, value);  
-		        } else {  
-		            field.setAccessible(true);  
-		            field.set(obj, value);  
-		            field.setAccessible(false);  
-		        }  
+			if (field.isAccessible()) {
+				field.set(obj, value);
+			} else {
+				field.setAccessible(true);
+				field.set(obj, value);
+				field.setAccessible(false);
+			}
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
@@ -304,61 +277,49 @@ public class ReflectUtils {
 			e1.printStackTrace();
 		}
 	}
-	
-	public static String getValueStringByFieldName(Object obj, String fieldName) {
-		Object result=getValueByFieldName(obj, fieldName);
+
+	public static String getValueStringByFieldName(Object obj, String fieldName)
+			throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+		Object result = getValueByFieldName(obj, fieldName);
 		return ObjectUtils.objectToString(result);
-		
+
 	}
+
 	/**
-	 * @Title: getValueByFieldName
-	 * @Description: 类的反射获取值Object
-	 * @author: 许鹏飞
-	 * @param: @param obj
-	 * @param: @param fieldName
-	 * @param: @return 参数说明
-	 * @return: Object 返回类型
-	 * @throws
+	 * @throws SecurityException
+	 * @throws NoSuchFieldException
+	 * @throws IllegalAccessException
+	 * @throws IllegalArgumentException
+	 * @Title: getValueByFieldName @Description: 类的反射获取值Object @author:
+	 *         许鹏飞 @param: @param obj @param: @param fieldName @param: @return
+	 *         参数说明 @return: Object 返回类型 @throws
 	 */
-	public static Object getValueByFieldName(Object obj, String fieldName) {
+	public static Object getValueByFieldName(Object obj, String fieldName)
+			throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
 		Field field = getFieldByFieldName(obj, fieldName);
 		Object value = null;
 		if (field != null) {
-			try {
-				if (field.isAccessible()) {  
-	                value = field.get(obj);  
-	            } else {  
-	                field.setAccessible(true);  
-	                value = field.get(obj);  
-	                field.setAccessible(false);  
-	            }  
-			} catch (IllegalArgumentException e) {
-				e.printStackTrace();
-			} catch (IllegalAccessException e) {
-				e.printStackTrace();
+			if (field.isAccessible()) {
+				value = field.get(obj);
+			} else {
+				field.setAccessible(true);
+				value = field.get(obj);
+				field.setAccessible(false);
 			}
 		}
 		return value;
 	}
-	
+
 	/**
-	 * @Title: getFieldByFieldName
-	 * @Description: 获取类的反射实体Field
-	 * @author: 许鹏飞
-	 * @param: @param obj
-	 * @param: @param fieldName
-	 * @param: @return 参数说明
-	 * @return: Field 返回类型
-	 * @throws
+	 * @throws SecurityException @throws NoSuchFieldException @Title:
+	 *                           getFieldByFieldName @Description:
+	 *                           获取类的反射实体Field @author: 许鹏飞 @param: @param
+	 *                           obj @param: @param fieldName @param: @return
+	 *                           参数说明 @return: Field 返回类型 @throws
 	 */
-	public static Field getFieldByFieldName(Object obj, String fieldName) {
-		for (Class<?> superClass = obj.getClass(); superClass != Object.class; superClass = superClass
-				.getSuperclass()) {
-			try {
-				return superClass.getDeclaredField(fieldName);
-			} catch (NoSuchFieldException e) {
-			}
-		}
-		return null;
+	public static Field getFieldByFieldName(Object obj, String fieldName)
+			throws NoSuchFieldException, SecurityException {
+		Class<?> superClass = obj.getClass();
+		return superClass.getDeclaredField(fieldName);
 	}
 }

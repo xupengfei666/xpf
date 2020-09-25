@@ -16,6 +16,8 @@ public class DemoData {
 	
 	public String name;
 	
+	public String type;
+	
 	public Integer count;
 	
 	public BigDecimal money;
@@ -52,6 +54,13 @@ public class DemoData {
 		this.money = money;
 	}
 
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
 	
 	
 }

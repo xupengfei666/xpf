@@ -13,6 +13,9 @@ package common.core;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+
+import common.enums.ConnectorEnum;
 import common.pojo.GroupBy;
 import common.pojo.Limit;
 import common.pojo.OrderBy;
@@ -25,21 +28,82 @@ import common.utils.ObjectUtils;
  * @author: 许鹏飞
  * @Company: 个人作品
  * @date: 2020-9-25 15:23:09
- * @param: 
+ * @param:
  */
 public class MyCoreService {
-	
+
 	public static MyCoreService getInstance() {
 		return new MyCoreService();
 	}
-	
-	public List<?> query(List<?> data,Where where,OrderBy orderBy,GroupBy groupBy,Limit limit){
-		List<Object> result=new ArrayList<Object>();
-		if(ObjectUtils.isNotEmpty(data)) {
-			for(Object obj:data) {
-				boolean b= WhereUtil.getInstance().queryWhere(data, where);
-				if(b) {
+
+	/**
+	 * @Title: query
+	 * @Description: 单个条件的实现方法
+	 * @author: 许鹏飞
+	 * @param: @param data
+	 * @param: @param where
+	 * @param: @param orderBy
+	 * @param: @param groupBy
+	 * @param: @param limit
+	 * @param: @return
+	 * @param: @throws NoSuchFieldException
+	 * @param: @throws SecurityException
+	 * @param: @throws IllegalArgumentException
+	 * @param: @throws IllegalAccessException 参数说明
+	 * @return: List<Object> 返回类型
+	 * @throws
+	 */
+	public List<Object> query(List<?> data, Where where, OrderBy orderBy, GroupBy groupBy, Limit limit)
+			throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+		List<Object> result = new ArrayList<Object>();
+		if (ObjectUtils.isNotEmpty(data)) {
+			for (Object obj : data) {
+				boolean b = WhereUtil.getInstance().queryWhere(obj, where);
+				if (b) {
 					result.add(obj);
+				}
+			}
+		}
+		return result;
+	}
+	
+	/**
+	 * @Title: query
+	 * @Description: 多个条件的实现方法
+	 * @author: 许鹏飞
+	 * @param: @param data
+	 * @param: @param where
+	 * @param: @param orderBy
+	 * @param: @param groupBy
+	 * @param: @param limit
+	 * @param: @return
+	 * @param: @throws NoSuchFieldException
+	 * @param: @throws SecurityException
+	 * @param: @throws IllegalArgumentException
+	 * @param: @throws IllegalAccessException 参数说明
+	 * @return: List<Object> 返回类型
+	 * @throws
+	 */
+	public List<Object> query(List<?> data, List<Where> wheres, OrderBy orderBy, GroupBy groupBy, Limit limit)
+			throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+		List<Object> result = new ArrayList<Object>();
+		if (ObjectUtils.isNotEmpty(data)) {
+			outSize:for (Object obj : data) {
+				if(ObjectUtils.isNotEmpty(wheres)) {
+					for (Where where : wheres) {
+						String connector = where.getConnector();
+						boolean b = WhereUtil.getInstance().queryWhere(obj, where);
+						if (b) {
+							result.add(obj);
+							if(StringUtils.equals(connector, ConnectorEnum.OR.toString())) {
+								continue outSize;
+							}
+						}else {
+							if(StringUtils.equals(connector, ConnectorEnum.AND.toString())) {
+								result.remove(obj);
+							}
+						}
+					}
 				}
 			}
 		}
