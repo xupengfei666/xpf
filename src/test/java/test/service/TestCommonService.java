@@ -18,6 +18,7 @@ import com.mayidb.service.IDemoService;
 import com.mayidb.service.impl.DemoService;
 
 import common.enums.ConditionEnum;
+import common.enums.ConnectorEnum;
 import common.pojo.GroupBy;
 import common.pojo.Limit;
 import common.pojo.OrderBy;
@@ -65,6 +66,36 @@ public class TestCommonService {
 			log.info("Where-->数据查询共用时间"+timeMllisecond+"毫秒！");
 			JSONArray array= JSONArray.parseArray(JSON.toJSONString(plist));
 	        log.info("Where-->数据查询成功"+array);
+		} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	/**
+	 * @Title: queryWhereOr
+	 * @Description: 条件有and和or
+	 * @author: 许鹏飞
+	 * @param:  参数说明
+	 * @return: void 返回类型
+	 * @throws
+	 */
+	@Test
+	public void queryWhereOr() {
+		long startTime=new Date().getTime();
+		log.info("Where Or-->数据查询开始=="+ startTime);
+		Where where=new Where();
+		where.set("type", "正式");
+		where.set("count", 3,ConditionEnum.GE.toString(),ConnectorEnum.OR.toString());
+		try {
+			@SuppressWarnings("unchecked")
+			List<DemoData> plist = (List<DemoData>) demoService.query(list, where, null, null, null);
+			long endTime=new Date().getTime();
+			long timeMllisecond=endTime-startTime;
+			log.info("Where Or-->数据查询共用时间"+timeMllisecond+"毫秒！");
+			JSONArray array= JSONArray.parseArray(JSON.toJSONString(plist));
+	        log.info("Where Or-->数据查询成功"+array);
 		} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
