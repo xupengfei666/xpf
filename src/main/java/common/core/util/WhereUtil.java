@@ -70,20 +70,17 @@ public class WhereUtil {
 					boolean b= isFitData(data, condition, property, valueString);
 					if (b) {
 						if (StringUtils.equals(connector, ConnectorEnum.OR.toString())) {
-							result.add(data);
+							addFlag=true;
 							continue;
-						}
-						if(addFlag) {
-							result.add(data);
-							addFlag=false;
 						}
 					} else {
 						if (StringUtils.equals(connector, ConnectorEnum.AND.toString())) {
-							result.remove(data);
 							addFlag=false;
 						}
 					}
-					
+				}
+				if(addFlag) {
+					result.add(data);
 				}
 			}
 		}else {
