@@ -12,7 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
-import com.mayidb.MallAppApplication;
+import com.mayidb.MyDBAppApplication;
 import com.mayidb.pojo.DemoData;
 import com.mayidb.service.IDemoService;
 import com.mayidb.service.impl.DemoService;
@@ -23,7 +23,7 @@ import common.pojo.Limit;
 import common.pojo.OrderBy;
 import common.pojo.Where;
 
-@SpringBootTest(classes = { MallAppApplication.class })
+@SpringBootTest(classes = { MyDBAppApplication.class })
 public class TestCommonService {
 	
 	public static final Logger log = LoggerFactory.getLogger(TestCommonService.class);

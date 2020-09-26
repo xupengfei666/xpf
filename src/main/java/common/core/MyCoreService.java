@@ -13,6 +13,10 @@ package common.core;
 import java.util.ArrayList;
 import java.util.List;
 
+import common.core.util.GroupByUtil;
+import common.core.util.LimitUtil;
+import common.core.util.OrderByUtil;
+import common.core.util.WhereUtil;
 import common.pojo.GroupBy;
 import common.pojo.Limit;
 import common.pojo.OrderBy;
@@ -56,7 +60,7 @@ public class MyCoreService {
 		if (ObjectUtils.isNotEmpty(data)) {
 			result=WhereUtil.getInstance().queryWhere(data, where,result);
 			result=OrderByUtil.getInstance().queryOrderBy(orderBy, result);
-			result=GroupByUtil.getInstance().queryGroupBy(data, groupBy, result);
+			result=GroupByUtil.getInstance().queryGroupBy(result, groupBy);
 			result=LimitUtil.getInstance().queryLimit(limit, result);
 		}
 		return result;

@@ -8,7 +8,7 @@
  * @version: V1.0
  * @Copyright: 版权
  */
-package common.core;
+package common.core.util;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -50,13 +50,13 @@ public class GroupByUtil {
 	 * @return: List<Object> 返回类型
 	 * @throws
 	 */
-	public List<Object> queryGroupBy(List<?> datas, GroupBy groupBy, List<Object> result)
+	public List<Object> queryGroupBy(List<Object> result, GroupBy groupBy)
 			throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<Object> groupList=new ArrayList<Object>();
 		if (ObjectUtils.isNotEmpty(groupBy)) {
 			String[] propertys = groupBy.getProperty();
-			for (Object data : datas) {
+			for (Object data : result) {
 				String key = "";
 				JSONObject jsonData=new JSONObject();
 				for (String property : propertys) {
@@ -77,6 +77,8 @@ public class GroupByUtil {
 				Map.Entry<String, Object> entry = it.next();
 				groupList.add(entry.getValue());
 			}
+		}else {
+			groupList=result;
 		}
 		return groupList;
 	}

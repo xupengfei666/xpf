@@ -8,7 +8,7 @@
  * @version: V1.0
  * @Copyright: 版权
  */
-package common.core;
+package common.core.util;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -8,10 +8,10 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication(exclude={DataSourceAutoConfiguration.class, HibernateJpaAutoConfiguration.class})
 @ComponentScan({"com.mayidb"})
-public class MallAppApplication {
+public class MyDBAppApplication {
 
 	public static void main(String[] args) {
-		 SpringApplication.run(MallAppApplication.class, args);
+		 SpringApplication.run(MyDBAppApplication.class, args);
 	}
 
 }
