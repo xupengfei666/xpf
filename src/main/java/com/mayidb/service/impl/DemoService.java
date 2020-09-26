@@ -47,8 +47,7 @@ public class DemoService implements IDemoService {
 	 * @param: @return
 	 * @see com.mayidb.service.IDemoService#addDatas(int)
 	 */
-	@Override
-	public List<DemoData> addDatas(int count) {
+	public  List<DemoData> addDatas(int count) {
 		List<DemoData> list = new ArrayList<DemoData>();
 		String[] datas = { "测试", "演示", "正式" };
 		Integer[] moneyTypes= {0,1,2,3,4}; 

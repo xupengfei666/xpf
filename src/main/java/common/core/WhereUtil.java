@@ -53,7 +53,7 @@ public class WhereUtil {
 	 * @throws
 	 */
 	@SuppressWarnings("unchecked")
-	public List<?> queryWhere(List<?> datas, Where where,List<Object> result) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+	public List<Object> queryWhere(List<?> datas, Where where,List<Object> result) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
 		if (ObjectUtils.isNotEmpty(where)) {
 			for (Object data : datas) {
 				Set<String> keys=where.keySet();

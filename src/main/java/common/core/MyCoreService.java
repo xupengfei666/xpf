@@ -54,9 +54,10 @@ public class MyCoreService {
 			throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
 		List<Object> result = new ArrayList<Object>();
 		if (ObjectUtils.isNotEmpty(data)) {
-			WhereUtil.getInstance().queryWhere(data, where,result);
-			GroupByUtil.getInstance().queryGroupBy(data, groupBy, result);
-			OrderByUtil.getInstance().queryOrderBy(orderBy, result);
+			result=WhereUtil.getInstance().queryWhere(data, where,result);
+			result=OrderByUtil.getInstance().queryOrderBy(orderBy, result);
+			result=GroupByUtil.getInstance().queryGroupBy(data, groupBy, result);
+			result=LimitUtil.getInstance().queryLimit(limit, result);
 		}
 		return result;
 	}

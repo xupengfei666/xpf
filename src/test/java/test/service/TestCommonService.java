@@ -14,10 +14,12 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.mayidb.MallAppApplication;
 import com.mayidb.pojo.DemoData;
+import com.mayidb.service.IDemoService;
 import com.mayidb.service.impl.DemoService;
 
 import common.enums.ConditionEnum;
 import common.pojo.GroupBy;
+import common.pojo.Limit;
 import common.pojo.OrderBy;
 import common.pojo.Where;
 
@@ -25,15 +27,14 @@ import common.pojo.Where;
 public class TestCommonService {
 	
 	public static final Logger log = LoggerFactory.getLogger(TestCommonService.class);
-	
-	public List<DemoData> list;
-
+	public  List<DemoData> list;
+	IDemoService demoService=DemoService.getInstance();
 	public static int dataCount=10;
 	@Before
-	public void addDemoDatas() {
+	public  void addDemoDatas() {
 		long startTime=new Date().getTime();
 		log.info("数据生产开始=="+ startTime);
-		this.list = DemoService.getInstance().addDatas(dataCount);
+		this.list = demoService.addDatas(dataCount);
 		long endTime=new Date().getTime();
 		long timeMllisecond=endTime-startTime;
 		log.info("数据生产共用时间"+timeMllisecond+"毫秒！");
@@ -52,18 +53,18 @@ public class TestCommonService {
 	@Test
 	public void query() {
 		long startTime=new Date().getTime();
-		log.info("数据查询开始=="+ startTime);
+		log.info("Where-->数据查询开始=="+ startTime);
 		Where where=new Where();
 		where.set("type", "正式");
 		where.set("count", 3,ConditionEnum.GE.toString());
 		try {
 			@SuppressWarnings("unchecked")
-			List<DemoData> plist = (List<DemoData>) DemoService.getInstance().query(list, where, null, null, null);
+			List<DemoData> plist = (List<DemoData>) demoService.query(list, where, null, null, null);
 			long endTime=new Date().getTime();
 			long timeMllisecond=endTime-startTime;
-			log.info("数据查询共用时间"+timeMllisecond+"毫秒！");
+			log.info("Where-->数据查询共用时间"+timeMllisecond+"毫秒！");
 			JSONArray array= JSONArray.parseArray(JSON.toJSONString(plist));
-	        log.info("数据查询成功"+array);
+	        log.info("Where-->数据查询成功"+array);
 		} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -83,28 +84,29 @@ public class TestCommonService {
 	@Test
 	public void queryOrderBy() {
 		long startTime=new Date().getTime();
-		log.info("排序-->数据查询开始=="+ startTime);
+		log.info("OrderBy-->数据查询开始=="+ startTime);
 		Where where=new Where();
 		where.set("type", "正式");
 		OrderBy orderBy=new OrderBy();
 		orderBy.setProperty(new String[] {"count","money"});
 		orderBy.setOrderType(new boolean[] {false,true});
+		List<DemoData> testList=list;
 		for(int i=0;i<dataCount;i++) {
 			DemoData demoData = new DemoData();
 			demoData.setName("正式"+i);
 			demoData.setCount(i);
 			demoData.setMoney(new BigDecimal(dataCount));
 			demoData.setType("正式");
-			list.add(demoData);
+			testList.add(demoData);
 		}
 		try {
 			@SuppressWarnings("unchecked")
-			List<DemoData> plist = (List<DemoData>) DemoService.getInstance().query(list, where, orderBy, null, null);
+			List<DemoData> plist = (List<DemoData>) demoService.query(testList, where, orderBy, null, null);
 			long endTime=new Date().getTime();
 			long timeMllisecond=endTime-startTime;
-			log.info("排序-->数据查询共用时间"+timeMllisecond+"毫秒！");
+			log.info("OrderBy-->数据查询共用时间"+timeMllisecond+"毫秒！");
 			JSONArray array= JSONArray.parseArray(JSON.toJSONString(plist));
-	        log.info("排序-->数据查询成功"+array);
+	        log.info("OrderBy-->数据查询成功"+array);
 		} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -129,12 +131,31 @@ public class TestCommonService {
 		GroupBy groupBy=new GroupBy(propertys);
 		try {
 			@SuppressWarnings("unchecked")
-			List<DemoData> plist = (List<DemoData>) DemoService.getInstance().query(list, null, null, groupBy, null);
+			List<DemoData> plist = (List<DemoData>) demoService.query(list, null, null, groupBy, null);
 			long endTime=new Date().getTime();
 			long timeMllisecond=endTime-startTime;
 			log.info("GroupBy-->数据查询共用时间"+timeMllisecond+"毫秒！");
 			JSONArray array= JSONArray.parseArray(JSON.toJSONString(plist));
 	        log.info("GroupBy-->数据查询成功"+array);
+		} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	@Test
+	public void queryLimit() {
+		long startTime=new Date().getTime();
+		log.info("Limit-->数据查询开始=="+ startTime);
+		Limit limit=new Limit(5,20);
+		try {
+			@SuppressWarnings("unchecked")
+			List<DemoData> plist = (List<DemoData>) demoService.query(list, null, null, null, limit);
+			long endTime=new Date().getTime();
+			long timeMllisecond=endTime-startTime;
+			log.info("Limit-->数据查询共用时间"+timeMllisecond+"毫秒！");
+			JSONArray array= JSONArray.parseArray(JSON.toJSONString(plist));
+	        log.info("Limit-->数据查询成功"+array);
 		} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

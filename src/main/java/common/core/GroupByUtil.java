@@ -10,6 +10,7 @@
  */
 package common.core;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -49,10 +50,10 @@ public class GroupByUtil {
 	 * @return: List<Object> 返回类型
 	 * @throws
 	 */
-	@SuppressWarnings("unchecked")
-	public List<?> queryGroupBy(List<?> datas, GroupBy groupBy, List<Object> result)
+	public List<Object> queryGroupBy(List<?> datas, GroupBy groupBy, List<Object> result)
 			throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
 		Map<String, Object> map = new HashMap<String, Object>();
+		List<Object> groupList=new ArrayList<Object>();
 		if (ObjectUtils.isNotEmpty(groupBy)) {
 			String[] propertys = groupBy.getProperty();
 			for (Object data : datas) {
@@ -74,11 +75,9 @@ public class GroupByUtil {
 			Iterator<Map.Entry<String, Object>> it = map.entrySet().iterator();
 			while (it.hasNext()) {
 				Map.Entry<String, Object> entry = it.next();
-				result.add(entry.getValue());
+				groupList.add(entry.getValue());
 			}
-		}else {
-			result=(List<Object>)datas;
 		}
-		return result;
+		return groupList;
 	}
 }

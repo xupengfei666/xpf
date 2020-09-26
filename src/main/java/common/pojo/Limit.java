@@ -1,64 +1,57 @@
 package common.pojo;
 
-import common.constants.Global;
-import common.utils.ObjectUtils;
-
 public class Limit {
-	
 
 	/**
-	 * @Fields page : 第几页开始
+	 * @Fields start : 从哪个位移开始，默认是0
 	 */
-	private int page;
-	
+	private int start;
+
 	/**
-	 * @Fields pageSize : 每一页多少条数据
+	 * @Fields dataSize :查询的数量
 	 */
-	private int pageSize;
+	private int dataSize;
 
-	public int getPage() {
-		return page;
+	
+	public int getStart() {
+		return start;
 	}
 
-	public void setPage(int page) {
-		this.page = page;
+	public void setStart(int start) {
+		this.start = start;
 	}
 
-	public int getPageSize() {
-		if(ObjectUtils.isNotEmpty(pageSize)) {
-			return pageSize;
-		}else {
-			return Global.PAGESIZE;
-		}
-		
+	public int getDataSize() {
+		return dataSize;
 	}
 
-	public void setPageSize(int pageSize) {
-		this.pageSize = pageSize;
+	public void setDataSize(int dataSize) {
+		this.dataSize = dataSize;
 	}
 
+	
 	/**
 	 * @Title: Limit.java
-	 * @Description: 构造分页函数
-	 * @param: @param page
-	 * @param: @param pageSize
+	 * @Description: 描述这个构造函数的作用
+	 * @param: @param start
+	 * @param: @param dataSize
 	 */
-	public Limit(int page, int pageSize) {
+	public Limit(int start, int dataSize) {
 		super();
-		this.page = page;
-		this.pageSize = pageSize;
+		this.start = start;
+		this.dataSize = dataSize;
 	}
 
+	
 	/**
 	 * @Title: Limit.java
-	 * @Description: 构造分页函数
-	 * @param: @param page
+	 * @Description: 描述这个构造函数的作用
+	 * @param: @param dataSize
 	 */
-	public Limit(int page) {
+	public Limit(int dataSize) {
 		super();
-		this.page = page;
+		setStart(0);
+		this.dataSize = dataSize;
 	}
-	
-	
-	
+
 }
