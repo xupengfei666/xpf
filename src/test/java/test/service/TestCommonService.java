@@ -1,6 +1,6 @@
 package test.service;
 
-import java.util.ArrayList;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -17,6 +17,7 @@ import com.mayidb.pojo.DemoData;
 import com.mayidb.service.impl.DemoService;
 
 import common.enums.ConditionEnum;
+import common.pojo.OrderBy;
 import common.pojo.Where;
 
 @SpringBootTest(classes = { MallAppApplication.class })
@@ -39,11 +40,21 @@ public class TestCommonService {
         log.info("数据生产成功"+array);
 	}
 	
-	//@Test
+	/**
+	 * @Title: query
+	 * @Description: 重点测试多个条件
+	 * @author: 许鹏飞
+	 * @param:  参数说明
+	 * @return: void 返回类型
+	 * @throws
+	 */
+	@Test
 	public void query() {
 		long startTime=new Date().getTime();
 		log.info("数据查询开始=="+ startTime);
-		Where where=new Where("type","正式");
+		Where where=new Where();
+		where.set("type", "正式");
+		where.set("count", 3,ConditionEnum.GE.toString());
 		try {
 			@SuppressWarnings("unchecked")
 			List<DemoData> plist = (List<DemoData>) DemoService.getInstance().query(list, where, null, null, null);
@@ -59,27 +70,46 @@ public class TestCommonService {
 		
 	}
 	
+	
+	/**
+	 * @Title: queryOrderBy
+	 * @Description: 重点测试多个排序
+	 * @author: 许鹏飞
+	 * @param:  参数说明
+	 * @return: void 返回类型
+	 * @throws
+	 */
 	@Test
-	public void queryWheres() {
+	public void queryOrderBy() {
 		long startTime=new Date().getTime();
-		log.info("多条件数据查询开始=="+ startTime);
-		Where where=new Where("type","正式");
-		Where where1=new Where(ConditionEnum.GE.toString(),"count","4");
-		List<Where> wheres=new ArrayList<Where>();
+		log.info("排序-->数据查询开始=="+ startTime);
+		Where where=new Where();
+		where.set("type", "正式");
+		OrderBy orderBy=new OrderBy();
+		orderBy.setProperty(new String[] {"count","money"});
+		orderBy.setOrderType(new boolean[] {false,true});
+		for(int i=0;i<dataCount;i++) {
+			DemoData demoData = new DemoData();
+			demoData.setName("正式"+i);
+			demoData.setCount(i);
+			demoData.setMoney(new BigDecimal(dataCount));
+			demoData.setType("正式");
+			list.add(demoData);
+		}
 		try {
-			wheres.add(where);
-			wheres.add(where1);
 			@SuppressWarnings("unchecked")
-			List<DemoData> plist = (List<DemoData>) DemoService.getInstance().query(list, wheres, null, null, null);
+			List<DemoData> plist = (List<DemoData>) DemoService.getInstance().query(list, where, orderBy, null, null);
 			long endTime=new Date().getTime();
 			long timeMllisecond=endTime-startTime;
-			log.info("多条件数据查询共用时间"+timeMllisecond+"毫秒！");
+			log.info("排序-->数据查询共用时间"+timeMllisecond+"毫秒！");
 			JSONArray array= JSONArray.parseArray(JSON.toJSONString(plist));
-	        log.info("多条件数据查询成功"+array);
+	        log.info("排序-->数据查询成功"+array);
 		} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 	}
+	
+	
 }

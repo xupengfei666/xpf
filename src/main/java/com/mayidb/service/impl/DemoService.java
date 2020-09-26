@@ -90,27 +90,4 @@ public class DemoService implements IDemoService {
 	}
 	
 	
-	/**
-	 * @Title: query
-	 * @Description: 多个条件的实现方法
-	 * @author: 许鹏飞
-	 * @param: @param data
-	 * @param: @param wheres
-	 * @param: @param orderBy
-	 * @param: @param groupBy
-	 * @param: @param limit
-	 * @param: @return
-	 * @param: @throws NoSuchFieldException
-	 * @param: @throws SecurityException
-	 * @param: @throws IllegalArgumentException
-	 * @param: @throws IllegalAccessException 参数说明
-	 * @return: List<?> 返回类型
-	 * @throws
-	 */
-	public List<?> query(List<?> data, List<Where> wheres, OrderBy orderBy, GroupBy groupBy, Limit limit)
-			throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
-
-		return MyCoreService.getInstance().query(data, wheres, orderBy, groupBy, limit);
-	}
-
 }

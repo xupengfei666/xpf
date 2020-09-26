@@ -23,4 +23,7 @@ public class Global {
 	public static int PAGESIZE=100;
 	
 	public static final String JAVA_LANG = "java.lang.";
+	
+	
+	public static final String DB_SEPARATOR = "@";
 }
