@@ -18,6 +18,8 @@ public class DemoData {
 	
 	public String type;
 	
+	public Integer moneyType;
+	
 	public Integer count;
 	
 	public BigDecimal money;
@@ -60,6 +62,14 @@ public class DemoData {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public Integer getMoneyType() {
+		return moneyType;
+	}
+
+	public void setMoneyType(Integer moneyType) {
+		this.moneyType = moneyType;
 	}
 	
 	

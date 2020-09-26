@@ -17,6 +17,7 @@ import com.mayidb.pojo.DemoData;
 import com.mayidb.service.impl.DemoService;
 
 import common.enums.ConditionEnum;
+import common.pojo.GroupBy;
 import common.pojo.OrderBy;
 import common.pojo.Where;
 
@@ -111,5 +112,34 @@ public class TestCommonService {
 		
 	}
 	
+	
+	/**
+	 * @Title: queryGroupBy
+	 * @Description: 多个group By的处理方式
+	 * @author: 许鹏飞
+	 * @param:  参数说明
+	 * @return: void 返回类型
+	 * @throws
+	 */
+	@Test
+	public void queryGroupBy() {
+		long startTime=new Date().getTime();
+		log.info("GroupBy-->数据查询开始=="+ startTime);
+		String[] propertys=new String[] {"type","moneyType"};
+		GroupBy groupBy=new GroupBy(propertys);
+		try {
+			@SuppressWarnings("unchecked")
+			List<DemoData> plist = (List<DemoData>) DemoService.getInstance().query(list, null, null, groupBy, null);
+			long endTime=new Date().getTime();
+			long timeMllisecond=endTime-startTime;
+			log.info("GroupBy-->数据查询共用时间"+timeMllisecond+"毫秒！");
+			JSONArray array= JSONArray.parseArray(JSON.toJSONString(plist));
+	        log.info("GroupBy-->数据查询成功"+array);
+		} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 	
 }

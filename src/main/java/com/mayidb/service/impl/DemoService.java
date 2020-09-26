@@ -51,6 +51,7 @@ public class DemoService implements IDemoService {
 	public List<DemoData> addDatas(int count) {
 		List<DemoData> list = new ArrayList<DemoData>();
 		String[] datas = { "测试", "演示", "正式" };
+		Integer[] moneyTypes= {0,1,2,3,4}; 
 		Random r = new Random();
 		for (int i = 0; i < count; i++) {
 			DemoData demoData = new DemoData();
@@ -61,6 +62,8 @@ public class DemoService implements IDemoService {
 			demoData.setCount(i);
 			demoData.setMoney(new BigDecimal(i));
 			demoData.setType(type);
+			Integer moneyType = moneyTypes[r.nextInt(moneyTypes.length)];
+			demoData.setMoneyType(moneyType);
 			list.add(demoData);
 		}
 		return list;

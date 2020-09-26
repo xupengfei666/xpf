@@ -23,22 +23,28 @@ public class GroupBy {
 	/**
 	 * @Fields property : 要排序的属性
 	 */
-	private String property;
+	private String[] property;
 
-	public String getProperty() {
+	
+
+	public String[] getProperty() {
 		return property;
 	}
 
-	public void setProperty(String property) {
+
+
+	public void setProperty(String[] property) {
 		this.property = property;
 	}
+
+
 
 	/**
 	 * @Title: GroupBy.java
 	 * @Description: 构造分组函数
 	 * @param: @param property 分组属性
 	 */
-	public GroupBy(String property) {
+	public GroupBy(String[] property) {
 		super();
 		this.property = property;
 	}

@@ -34,44 +34,33 @@ public class MyCoreService {
 	}
 
 	/**
-	 * @Title: query @Description: 单个条件的实现方法 @author: 许鹏飞 @param: @param
-	 * data @param: @param where @param: @param orderBy @param: @param
-	 * groupBy @param: @param limit @param: @return @param: @throws
-	 * NoSuchFieldException @param: @throws SecurityException @param: @throws
-	 * IllegalArgumentException @param: @throws IllegalAccessException 参数说明 @return:
-	 * List<Object> 返回类型 @throws
+	 * @Title: query
+	 * @Description: 核心方法处理多条件，多排序，多去重和limit的方法处理
+	 * @author: 许鹏飞
+	 * @param: @param data
+	 * @param: @param where
+	 * @param: @param orderBy
+	 * @param: @param groupBy
+	 * @param: @param limit
+	 * @param: @return
+	 * @param: @throws NoSuchFieldException
+	 * @param: @throws SecurityException
+	 * @param: @throws IllegalArgumentException
+	 * @param: @throws IllegalAccessException 参数说明
+	 * @return: List<Object> 返回类型
+	 * @throws
 	 */
 	public List<Object> query(List<?> data, Where where, OrderBy orderBy, GroupBy groupBy, Limit limit)
 			throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
 		List<Object> result = new ArrayList<Object>();
 		if (ObjectUtils.isNotEmpty(data)) {
-			for (Object obj : data) {
-				WhereUtil.getInstance().queryWhere(obj, where,result);
-				OrderByUtil.getInstance().queryOrderBy(orderBy, result);
-			}
+			WhereUtil.getInstance().queryWhere(data, where,result);
+			GroupByUtil.getInstance().queryGroupBy(data, groupBy, result);
+			OrderByUtil.getInstance().queryOrderBy(orderBy, result);
 		}
 		return result;
 	}
 
-	/**
-	 * @Title: query @Description: 多个条件的实现方法 @author: 许鹏飞 @param: @param
-	 * data @param: @param where @param: @param orderBy @param: @param
-	 * groupBy @param: @param limit @param: @return @param: @throws
-	 * NoSuchFieldException @param: @throws SecurityException @param: @throws
-	 * IllegalArgumentException @param: @throws IllegalAccessException 参数说明 @return:
-	 * List<Object> 返回类型 @throws
-	 *//*
-		 * public List<Object> query(List<?> data, List<Where> wheres, OrderBy orderBy,
-		 * GroupBy groupBy, Limit limit) throws NoSuchFieldException, SecurityException,
-		 * IllegalArgumentException, IllegalAccessException { List<Object> result = new
-		 * ArrayList<Object>(); if (ObjectUtils.isNotEmpty(data)) { outSize:for (Object
-		 * obj : data) { if(ObjectUtils.isNotEmpty(wheres)) { for (Where where : wheres)
-		 * { String connector = where.getConnector(); boolean b =
-		 * WhereUtil.getInstance().queryWhere(obj, where); if (b) { result.add(obj);
-		 * if(StringUtils.equals(connector, ConnectorEnum.OR.toString())) { continue
-		 * outSize; } }else { if(StringUtils.equals(connector,
-		 * ConnectorEnum.AND.toString())) { result.remove(obj); } } } } } } return
-		 * result; }
-		 */
+	
 
 }

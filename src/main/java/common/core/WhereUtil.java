@@ -52,38 +52,42 @@ public class WhereUtil {
 	 * @return: int 返回类型
 	 * @throws
 	 */
-	public List<Object> queryWhere(Object data, Where where,List<Object> result) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+	@SuppressWarnings("unchecked")
+	public List<?> queryWhere(List<?> datas, Where where,List<Object> result) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
 		if (ObjectUtils.isNotEmpty(where)) {
-			Set<String> keys=where.keySet();
-			boolean addFlag=true;
-			for(String key:keys) {
-				String[] keyStrings=StringUtils.split(key, Global.DB_SEPARATOR);
-				String property = keyStrings[0];
-				String condition =keyStrings[1];
-				String connector=keyStrings[2];
-				Object value = where.get(key);
-				String valueString = ObjectUtils.objectToString(value);
-				condition=Global.DB_SEPARATOR+condition;
-				connector=Global.DB_SEPARATOR+connector;
-				boolean b= isFitData(data, condition, property, valueString);
-				if (b) {
-					if (StringUtils.equals(connector, ConnectorEnum.OR.toString())) {
-						result.add(data);
-						continue;
+			for (Object data : datas) {
+				Set<String> keys=where.keySet();
+				boolean addFlag=true;
+				for(String key:keys) {
+					String[] keyStrings=StringUtils.split(key, Global.DB_SEPARATOR);
+					String property = keyStrings[0];
+					String condition =keyStrings[1];
+					String connector=keyStrings[2];
+					Object value = where.get(key);
+					String valueString = ObjectUtils.objectToString(value);
+					condition=Global.DB_SEPARATOR+condition;
+					connector=Global.DB_SEPARATOR+connector;
+					boolean b= isFitData(data, condition, property, valueString);
+					if (b) {
+						if (StringUtils.equals(connector, ConnectorEnum.OR.toString())) {
+							result.add(data);
+							continue;
+						}
+						if(addFlag) {
+							result.add(data);
+							addFlag=false;
+						}
+					} else {
+						if (StringUtils.equals(connector, ConnectorEnum.AND.toString())) {
+							result.remove(data);
+							addFlag=false;
+						}
 					}
-					if(addFlag) {
-						result.add(data);
-						addFlag=false;
-					}
-				} else {
-					if (StringUtils.equals(connector, ConnectorEnum.AND.toString())) {
-						result.remove(data);
-						addFlag=false;
-					}
+					
 				}
-				
 			}
-			
+		}else {
+			result=(List<Object>)datas;
 		}
 		return result;
 	}
